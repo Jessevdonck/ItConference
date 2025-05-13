@@ -6,6 +6,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "event", uniqueConstraints = {
@@ -28,7 +29,7 @@ public class Event {
     private String beschrijving;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Spreker> sprekers;
+    private Set<Spreker> sprekers;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "lokaal_id")

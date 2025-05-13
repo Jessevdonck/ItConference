@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class InitDataConfig implements CommandLineRunner {
@@ -72,7 +73,7 @@ public class InitDataConfig implements CommandLineRunner {
         var spreker1a = Spreker.builder().naam("Alice Developer").event(event1).build();
         var spreker1b = Spreker.builder().naam("Bob Coder").event(event1).build();
 
-        event1.setSprekers(List.of(spreker1a, spreker1b));
+        event1.setSprekers(Set.of(spreker1a, spreker1b));
 
         var event2 = Event.builder()
                 .naam("Advanced Java")
@@ -85,7 +86,7 @@ public class InitDataConfig implements CommandLineRunner {
                 .build();
 
         var spreker2a = Spreker.builder().naam("Charlie Architect").event(event2).build();
-        event2.setSprekers(List.of(spreker2a));
+        event2.setSprekers(Set.of(spreker2a));
 
         var event3 = Event.builder()
                 .naam("Reactive Programming")
@@ -99,7 +100,7 @@ public class InitDataConfig implements CommandLineRunner {
 
         var spreker3a = Spreker.builder().naam("Dora Functional").event(event3).build();
         var spreker3b = Spreker.builder().naam("Eve Reactive").event(event3).build();
-        event3.setSprekers(List.of(spreker3a, spreker3b));
+        event3.setSprekers(Set.of(spreker3a, spreker3b));
 
         eventRepository.saveAll(List.of(event1, event2, event3));
         sprekerRepository.saveAll(List.of(spreker1a, spreker1b, spreker2a, spreker3a, spreker3b));
