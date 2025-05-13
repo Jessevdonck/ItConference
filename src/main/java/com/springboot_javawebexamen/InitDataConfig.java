@@ -38,19 +38,19 @@ public class InitDataConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         // ---------- Gebruikers ----------
-//        var admin = Gebruiker.builder()
-//                .gebruikersnaam("admin")
-//                .wachtwoord(encoder.encode("admin123"))
-//                .rol(utils.GebruikerRol.ADMIN)
-//                .build();
-//
-//        var user = Gebruiker.builder()
-//                .gebruikersnaam("user")
-//                .wachtwoord(encoder.encode("user123"))
-//                .rol(utils.GebruikerRol.USER)
-//                .build();
-//
-//        gebruikerRepository.saveAll(List.of(admin, user));
+        var admin = Gebruiker.builder()
+                .gebruikersnaam("admin")
+                .wachtwoord(encoder.encode("admin123"))
+                .rol(utils.GebruikerRol.ADMIN)
+                .build();
+
+        var user = Gebruiker.builder()
+                .gebruikersnaam("user")
+                .wachtwoord(encoder.encode("user123"))
+                .rol(utils.GebruikerRol.USER)
+                .build();
+
+        gebruikerRepository.saveAll(List.of(admin, user));
 
         // ---------- Lokalen ----------
         var lokaal1 = Lokaal.builder().naam("A101").capaciteit(30).build();

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="navbar">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <div>
+      Ingelogd als: <strong th:text="${username}"></strong>
+    </div>
+    <form th:action="@{/logout}" method="post">
+      <button type="submit" class="btn">Uitloggen</button>
+    </form>
+  </div>
+</div>
+</html>

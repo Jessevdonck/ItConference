@@ -1,6 +1,7 @@
 package domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -19,9 +20,11 @@ public class Favoriet {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "gebruiker_id")
+    @NotNull(message = "{favoriet.gebruiker.verplicht}")
     private Gebruiker gebruiker;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "event_id")
+    @NotNull(message = "{favoriet.event.verplicht}")
     private Event event;
 }

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import service.*;
 
@@ -21,5 +22,10 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
     @Bean
     EventService eventService() {
         return new EventServiceImpl();
+    }
+
+    @Bean
+    UserDetailsService userDetailsService() {
+        return new MyUserDetailsService();
     }
 }

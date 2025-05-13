@@ -1,6 +1,9 @@
 package domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import utils.GebruikerRol;
 import java.util.List;
@@ -21,13 +24,16 @@ public class Gebruiker {
     private long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "{gebruiker.gebruikersnaam.leeg}")
     private String gebruikersnaam;
 
     @Column(nullable = false)
+    @NotBlank(message = "{gebruiker.wachtwoord.leeg}")
     private String wachtwoord;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol")
+    @NotNull(message = "{gebruiker.rol.leeg}")
     private GebruikerRol rol;
 
     @OneToMany(mappedBy = "gebruiker", cascade = CascadeType.ALL)

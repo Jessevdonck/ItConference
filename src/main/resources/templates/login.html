@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Login - IT-Conferentie 2025</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div class="container" style="max-width: 400px; margin: auto; padding-top: 4rem;">
+  <h1>Inloggen</h1>
+
+  <div th:if="${error}" style="color: red;" th:text="${error}"></div>
+  <div th:if="${msg}" style="color: green;" th:text="${msg}"></div>
+
+  <form th:action="@{/login}" method="post">
+    <div>
+      <label for="gebruikersnaam">Gebruikersnaam:</label>
+      <input type="text" id="gebruikersnaam" name="gebruikersnaam" required/>
+    </div>
+    <div style="margin-top: 1rem;">
+      <label for="wachtwoord">Wachtwoord:</label>
+      <input type="password" id="wachtwoord" name="wachtwoord" required/>
+    </div>
+    <div style="margin-top: 2rem;">
+      <button type="submit" class="btn">Login</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
