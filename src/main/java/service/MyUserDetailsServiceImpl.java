@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class MyUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private GebruikerRepository gebruikerRepository;

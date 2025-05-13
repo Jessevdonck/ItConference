@@ -26,6 +26,6 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
 
     @Bean
     UserDetailsService userDetailsService() {
-        return new MyUserDetailsService();
+        return new MyUserDetailsServiceImpl();
     }
 }
