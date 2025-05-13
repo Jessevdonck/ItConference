@@ -3,32 +3,95 @@
 <head>
     <title>IT-Conferentie 2025 - Dashboard</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 </head>
-<body>
-<h1>Overzicht van events</h1>
+<body class="card-view">
+<div class="container">
+    <h1>IT-Conferentie 2025</h1>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>Naam</th>
-        <th>Sprekers</th>
-        <th>Lokaal</th>
-        <th>Datum & Tijd</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="event : ${events}">
-        <td th:text="${event.naam}"></td>
-        <td>
-            <span th:each="spreker, iter : ${event.sprekers}" th:if="${iter.index < 3}">
-                <span th:text="${spreker.naam}"></span><br/>
-            </span>
-        </td>
-        <td th:text="${event.lokaal.naam}"></td>
-        <td th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy HH:mm')}"></td>
-    </tr>
-    </tbody>
-</table>
+    <button class="btn view-toggle" id="viewToggle">Wissel naar tabelweergave</button>
 
+    <!-- Modern Card Layout -->
+    <div class="events-container">
+        <div class="event-card" th:each="event : ${events}">
+            <div class="event-header">
+                <div class="event-name" th:text="${event.naam}"></div>
+                <div class="location-badge" th:text="${event.lokaal.naam}"></div>
+            </div>
+            <div class="event-content">
+                <div class="event-detail">
+                    <div class="detail-label">Sprekers:</div>
+                    <div class="detail-value">
+                        <ul class="speaker-list">
+                            <li class="speaker-item" th:each="spreker, iter : ${event.sprekers}" th:if="${iter.index < 3}" th:text="${spreker.naam}"></li>
+                            <li class="speaker-item" th:if="${event.sprekers.size() > 3}" th:text="'+ ' + (${event.sprekers.size() - 3}) + ' meer'"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="event-detail">
+                    <div class="detail-label">Datum & Tijd:</div>
+                    <div class="detail-value">
+                        <div class="event-datetime-container">
+                            <div class="event-date" th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy')}"></div>
+                            <div class="event-time" th:text="${#temporals.format(event.datumTijd, 'HH:mm')}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table View -->
+    <div class="events-table-container">
+        <table class="events-table">
+            <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Sprekers</th>
+                <th>Lokaal</th>
+                <th>Datum</th>
+                <th>Tijd</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${events}">
+                <td th:text="${event.naam}"></td>
+                <td>
+                        <span th:each="spreker, iter : ${event.sprekers}" th:if="${iter.index < 3}">
+                            <span th:text="${spreker.naam}"></span><br/>
+                        </span>
+                    <span th:if="${event.sprekers.size() > 3}" th:text="'+ ' + (${event.sprekers.size() - 3}) + ' meer'"></span>
+                </td>
+                <td th:text="${event.lokaal.naam}"></td>
+                <td th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#temporals.format(event.datumTijd, 'HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const viewToggle = document.getElementById('viewToggle');
+        const body = document.body;
+
+        viewToggle.addEventListener('click', function() {
+            if (body.classList.contains('card-view')) {
+                body.classList.remove('card-view');
+                body.classList.add('table-view');
+                viewToggle.textContent = 'Wissel naar kaartweergave';
+            } else {
+                body.classList.remove('table-view');
+                body.classList.add('card-view');
+                viewToggle.textContent = 'Wissel naar tabelweergave';
+            }
+        });
+    });
+</script>
 </body>
 </html>

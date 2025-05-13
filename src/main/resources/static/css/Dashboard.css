@@ -1,0 +1,211 @@
+/* Import variables */
+@import 'variables.css';
+
+/* Page header */
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* View toggle button */
+.view-toggle {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: var(--spacing-md);
+    transition: background-color 0.2s;
+}
+
+.view-toggle:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Card-based event layout */
+.events-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.event-card {
+    background-color: var(--background-white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px var(--shadow-light);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-medium);
+}
+
+.event-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1.25rem;
+    position: relative;
+}
+
+.event-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-content {
+    padding: 1.25rem;
+}
+
+.event-detail {
+    display: flex;
+    margin-bottom: var(--spacing-md);
+    align-items: flex-start;
+}
+
+.event-detail:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 600;
+    min-width: 100px;
+    color: var(--text-medium);
+}
+
+.detail-value {
+    flex: 1;
+}
+
+.speaker-list {
+    list-style: none;
+}
+
+.speaker-item {
+    padding: var(--spacing-xs) 0;
+}
+
+.event-datetime-container {
+    margin-top: var(--spacing-sm);
+}
+
+.event-date,
+.event-time {
+    display: inline-block;
+    background-color: var(--primary-lighter);
+    color: var(--primary-color);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    margin-right: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-time {
+    background-color: var(--primary-light);
+}
+
+.location-badge {
+    display: inline-block;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Table styling */
+.events-table-container {
+    display: none;
+    margin-top: var(--spacing-xl);
+}
+
+.events-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--background-white);
+    box-shadow: 0 4px 12px var(--shadow-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.events-table th {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: left;
+    padding: var(--spacing-md);
+}
+
+.events-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid #eee;
+}
+
+.events-table tr:last-child td {
+    border-bottom: none;
+}
+
+.events-table tr:hover {
+    background-color: var(--primary-lighter);
+}
+
+/* View states */
+.card-view .events-container {
+    display: grid;
+}
+
+.card-view .events-table-container {
+    display: none;
+}
+
+.table-view .events-container {
+    display: none;
+}
+
+.table-view .events-table-container {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .event-detail {
+        flex-direction: column;
+    }
+
+    .detail-label {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .events-container {
+        grid-template-columns: 1fr;
+    }
+
+    .events-table th,
+    .events-table td {
+        padding: var(--spacing-sm);
+    }
+}
