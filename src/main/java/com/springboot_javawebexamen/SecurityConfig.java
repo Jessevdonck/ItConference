@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/css/**", "/images/**", "/", "/error").permitAll()
-                        .requestMatchers("/dashboard").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/dashboard").permitAll()
                         .requestMatchers("/event/toevoegen", "/lokaal/**").hasRole("ADMIN")
                         .requestMatchers("/favorieten/**").hasRole("USER")
                         .anyRequest().authenticated()

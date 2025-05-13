@@ -2,12 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="navbar">
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+
     <div>
-      Ingelogd als: <strong th:text="${username}"></strong>
+      <span th:if="${username != null}">
+        Ingelogd als: <strong th:text="${username}"></strong>
+      </span>
     </div>
-    <form th:action="@{/logout}" method="post">
-      <button type="submit" class="btn">Uitloggen</button>
-    </form>
+
+    <div>
+      <!-- Als ingelogd: logout knop -->
+      <form th:if="${username != null}" th:action="@{/logout}" method="post">
+        <button type="submit" class="btn">Uitloggen</button>
+      </form>
+
+      <!-- Als NIET ingelogd: login knop -->
+      <a th:if="${username == null}" th:href="@{/login}" class="btn">Inloggen</a>
+    </div>
+
   </div>
 </div>
 </html>

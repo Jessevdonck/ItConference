@@ -25,7 +25,10 @@ public class DashboardController {
     public String showDashboard(Model model, Principal principal) {
         List<Event> events = eventService.getAllEventsSorted();
         model.addAttribute("events", events);
-        model.addAttribute("username", principal.getName());
+        if(principal != null){
+            model.addAttribute("username", principal.getName());
+        }
+
 
         return "dashboard";
     }
