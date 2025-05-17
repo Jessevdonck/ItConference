@@ -1,24 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="navbar">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+  <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+  <nav class="main-navbar">
+    <div class="navbar-container">
+      <div class="navbar-left">
+        <a th:href="@{/}" class="navbar-brand">
+          <svg class="brand-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M19 4h-4V3c0-.6-.4-1-1-1h-4c-.6 0-1 .4-1 1v1H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-6 0h-2V3h2v1z" fill="currentColor"/>
+            <path d="M12 8c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm3 5.5h-2.5V16h-1v-2.5H9v-1h2.5V10h1v2.5H15v1z" fill="currentColor"/>
+          </svg>
+          <span>IT-Conferentie</span>
+        </a>
+        <div class="navbar-links">
+          <a th:href="@{/}" class="nav-link">Home</a>
+          <a th:href="@{/events}" class="nav-link">Evenementen</a>
+          <a th:if="${userRole}" th:href="@{/favorieten}" class="nav-link">Favorieten</a>
+          <a th:if="${userRole == 'admin'}" th:href="@{/admin}" class="nav-link admin-link">Beheer</a>
+        </div>
+      </div>
 
-    <div>
-      <span th:if="${username != null}">
-        Ingelogd als: <strong th:text="${username}"></strong>
-      </span>
+      <div class="navbar-right">
+        <div th:if="${username != null}" class="user-dropdown">
+          <div class="user-info">
+            <span class="user-avatar">
+              <span th:text="${#strings.substring(username,0,1).toUpperCase()}">A</span>
+            </span>
+            <span class="username" th:text="${username}">Gebruiker</span>
+            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24">
+              <path d="M7 10l5 5 5-5z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-header" th:text="${username}">Ingelogd als Gebruiker</div>
+            <div class="dropdown-divider"></div>
+            <a th:href="@{/profiel}" class="dropdown-item">Mijn profiel</a>
+            <a th:href="@{/favorieten}" class="dropdown-item">Mijn favorieten</a>
+            <div class="dropdown-divider"></div>
+            <form th:action="@{/logout}" method="post">
+              <button type="submit" class="dropdown-item logout-btn">Uitloggen</button>
+            </form>
+          </div>
+        </div>
+
+        <a th:if="${username == null}" th:href="@{/login}" class="btn login-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" class="login-icon">
+            <path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z" fill="currentColor"/>
+          </svg>
+          <span>Inloggen</span>
+        </a>
+      </div>
     </div>
-
-    <div>
-      <!-- Als ingelogd: logout knop -->
-      <form th:if="${username != null}" th:action="@{/logout}" method="post">
-        <button type="submit" class="btn">Uitloggen</button>
-      </form>
-
-      <!-- Als NIET ingelogd: login knop -->
-      <a th:if="${username == null}" th:href="@{/login}" class="btn">Inloggen</a>
-    </div>
-
-  </div>
+  </nav>
 </div>
 </html>

@@ -16,11 +16,8 @@
 <div class="container">
     <h1>IT-Conferentie 2025</h1>
 
-    <button class="btn view-toggle" id="viewToggle">Wissel naar tabelweergave</button>
-
-    <!-- Modern Card Layout -->
     <div class="events-container">
-        <div class="event-card" th:each="event : ${events}">
+        <a class="event-card" th:each="event : ${events}" th:href="@{'/event/' + ${event.id}}">
             <div class="event-header">
                 <div class="event-name" th:text="${event.naam}"></div>
                 <div class="location-badge" th:text="${event.lokaal.naam}"></div>
@@ -45,56 +42,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Table View -->
-    <div class="events-table-container">
-        <table class="events-table">
-            <thead>
-            <tr>
-                <th>Naam</th>
-                <th>Sprekers</th>
-                <th>Lokaal</th>
-                <th>Datum</th>
-                <th>Tijd</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="event : ${events}">
-                <td th:text="${event.naam}"></td>
-                <td>
-                        <span th:each="spreker, iter : ${event.sprekers}" th:if="${iter.index < 3}">
-                            <span th:text="${spreker.naam}"></span><br/>
-                        </span>
-                    <span th:if="${event.sprekers.size() > 3}" th:text="'+ ' + (${event.sprekers.size() - 3}) + ' meer'"></span>
-                </td>
-                <td th:text="${event.lokaal.naam}"></td>
-                <td th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy')}"></td>
-                <td th:text="${#temporals.format(event.datumTijd, 'HH:mm')}"></td>
-            </tr>
-            </tbody>
-        </table>
+        </a>
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const viewToggle = document.getElementById('viewToggle');
-        const body = document.body;
-
-        viewToggle.addEventListener('click', function() {
-            if (body.classList.contains('card-view')) {
-                body.classList.remove('card-view');
-                body.classList.add('table-view');
-                viewToggle.textContent = 'Wissel naar kaartweergave';
-            } else {
-                body.classList.remove('table-view');
-                body.classList.add('card-view');
-                viewToggle.textContent = 'Wissel naar tabelweergave';
-            }
-        });
-    });
-</script>
 </body>
 </html>

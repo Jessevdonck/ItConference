@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/images/**", "/", "/error", "/event/*").permitAll()
+                        .requestMatchers("/login", "/css/**", "/images/**", "/", "/error", "/event/*", "/events").permitAll()
                         .requestMatchers("/dashboard").permitAll()
                         .requestMatchers("/event/toevoegen", "/lokaal/**").hasRole("ADMIN")
                         .requestMatchers("/favorieten/**").hasRole("USER")

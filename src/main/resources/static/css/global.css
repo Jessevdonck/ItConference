@@ -18,7 +18,8 @@ body {
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--background-light);
-    padding: var(--spacing-xl);
+    padding: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+    margin: 0;
 }
 
 ::selection {
@@ -55,10 +56,6 @@ a {
     transition: color 0.2s;
 }
 
-a:hover {
-    color: var(--primary-dark);
-    text-decoration: underline;
-}
 
 /* Common components */
 button.btn {

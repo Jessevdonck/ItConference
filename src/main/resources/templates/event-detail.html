@@ -8,6 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/event-detail.css}">
 </head>
 <body>
+
+<div th:replace="~{nav :: navbar}"></div>
+
 <div class="event-header">
     <div class="event-header-content">
         <h1 th:text="${event.naam}">Event naam</h1>
