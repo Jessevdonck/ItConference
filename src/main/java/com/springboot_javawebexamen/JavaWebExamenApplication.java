@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import perform.PerformRestClient;
 import service.*;
 
 @SpringBootApplication
@@ -16,6 +17,12 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
         SpringApplication.run(JavaWebExamenApplication.class, args);
+
+        try {
+            new PerformRestClient().run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /* Service */

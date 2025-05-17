@@ -2,6 +2,7 @@ package service;
 
 import domain.Event;
 import domain.Lokaal;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;

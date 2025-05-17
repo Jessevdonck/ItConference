@@ -46,7 +46,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getEventsOpDatum(LocalDateTime datum) {
-        return eventRepository.findByDatumTijd(datum);
+        LocalDateTime start = datum.toLocalDate().atStartOfDay();
+        LocalDateTime end = start.plusDays(1);
+        return eventRepository.findByDatum(start, end);
     }
 
     @Override

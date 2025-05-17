@@ -1,5 +1,6 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -35,6 +36,7 @@ public class Event {
     private BigDecimal prijs;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @Size(max = 3, message = "{event.sprekers.max3}")
     private Set<Spreker> sprekers;
 

@@ -1,5 +1,6 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,7 @@ public class Spreker {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "event_id")
+    @JsonBackReference
     @NotNull(message = "{spreker.event.verplicht}")
     private Event event;
 }
