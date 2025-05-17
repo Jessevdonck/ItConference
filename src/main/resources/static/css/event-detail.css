@@ -1,0 +1,148 @@
+/* Import variables */
+@import 'variables.css';
+
+/* Event detail page styling */
+.event-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-xl);
+}
+
+.event-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.event-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.event-header h1::after {
+    display: none;
+}
+
+.event-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg) var(--spacing-xxl);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+.event-description {
+    background-color: var(--background-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 6px var(--shadow-light);
+}
+
+.event-description p {
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+    color: var(--text-medium);
+}
+
+.event-description h2 {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.6rem;
+}
+
+.event-description h3 {
+    color: var(--primary-color);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.3rem;
+}
+
+.event-meta {
+    background-color: var(--background-white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 6px var(--shadow-light);
+}
+
+.meta-item {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--primary-lighter);
+}
+
+.meta-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+.meta-value {
+    font-size: 1.1rem;
+}
+
+.sprekers-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sprekers-lijst li {
+    padding: var(--spacing-sm) 0;
+    font-size: 1.1rem;
+}
+
+.event-actions {
+    grid-column: span 2;
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.event-actions form {
+    margin: 0;
+}
+
+.event-actions .btn {
+    width: 100%;
+    min-width: 200px;
+}
+
+.event-actions .btn-secondary {
+    background-color: var(--primary-lighter);
+    color: var(--primary-dark);
+    border: 1px solid var(--primary-color);
+}
+
+.event-actions .btn-secondary:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .event-detail-container {
+        grid-template-columns: 1fr;
+    }
+
+    .event-actions {
+        grid-column: 1;
+        flex-direction: column;
+    }
+
+    .event-header h1 {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Foutpagina</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container" style="margin-top: 5rem;">
+  <h1 class="text-2xl font-bold mb-4" th:text="'HTTP Status ' + ${errorCode} + ' – ' + ${errorMessage}">Fout</h1>
+
+  <div>
+    <a th:href="@{/dashboard}" class="btn">Terug naar dashboard</a>
+  </div>
+</div>
+</body>
+</html>

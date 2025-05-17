@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Event: ' + ${event.naam}">Event detail</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/event-detail.css}">
+</head>
+<body>
+<div class="event-header">
+    <div class="event-header-content">
+        <h1 th:text="${event.naam}">Event naam</h1>
+    </div>
+</div>
+
+<div class="event-detail-container">
+    <div class="event-description">
+        <h2>Over dit event</h2>
+        <p th:if="${event.beschrijving}" th:text="${event.beschrijving}">Beschrijving van het event met alle details over wat er te verwachten valt.</p>
+        <p th:unless="${event.beschrijving}">Geen beschrijving beschikbaar voor dit event.</p>
+
+        <h3>Sprekers</h3>
+        <ul class="sprekers-lijst">
+            <li th:each="spreker : ${event.sprekers}" th:text="${spreker.naam}">Naam van de spreker</li>
+            <li th:if="${#lists.isEmpty(event.sprekers)}">Geen sprekers vermeld</li>
+        </ul>
+    </div>
+
+    <div class="event-meta">
+        <div class="meta-item">
+            <span class="meta-label">Datum</span>
+            <div class="meta-value" th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy')}">01-01-2023</div>
+        </div>
+
+        <div class="meta-item">
+            <span class="meta-label">Tijd</span>
+            <div class="meta-value" th:text="${#temporals.format(event.datumTijd, 'HH:mm')}">14:00</div>
+        </div>
+
+        <div class="meta-item">
+            <span class="meta-label">Lokaal</span>
+            <div class="meta-value" th:text="${event.lokaal.naam}">A.123</div>
+        </div>
+
+        <div class="meta-item">
+            <span class="meta-label">Capaciteit</span>
+            <div class="meta-value" th:text="${event.lokaal.capaciteit}">50 personen</div>
+        </div>
+    </div>
+
+    <div class="event-actions">
+        <form th:if="${magToevoegenAanFavorieten}" th:action="@{'/favorieten/toevoegen/' + ${event.id}}" method="post">
+            <button type="submit" class="btn">Toevoegen aan favorieten</button>
+        </form>
+
+        <form th:if="${isAdmin}" th:action="@{'/event/bewerken/' + ${event.id}}" method="get">
+            <button type="submit" class="btn btn-secondary">Bewerk event</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
