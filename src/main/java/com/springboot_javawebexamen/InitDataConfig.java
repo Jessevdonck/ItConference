@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import repository.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -63,24 +63,25 @@ public class InitDataConfig implements CommandLineRunner {
         var event1 = Event.builder()
                 .naam("Spring Boot Intro")
                 .beschrijving("Een inleiding tot Spring Boot")
-                .datumTijd(LocalDateTime.of(2025, 6, 1, 10, 0))
+                .datum(LocalDate.of(2025, 6, 1))
+                .startuur(LocalTime.of(10, 0))
                 .beamerCode("1234")
-                .beamercheck("29") // 1234 % 97 = 29
+                .beamercheck("70")
                 .prijs(new BigDecimal("19.99"))
                 .lokaal(lokaal1)
                 .build();
 
         var spreker1a = Spreker.builder().naam("Alice Developer").event(event1).build();
         var spreker1b = Spreker.builder().naam("Bob Coder").event(event1).build();
-
         event1.setSprekers(Set.of(spreker1a, spreker1b));
 
         var event2 = Event.builder()
                 .naam("Advanced Java")
                 .beschrijving("Diepere inzichten in Java 21")
-                .datumTijd(LocalDateTime.of(2025, 6, 1, 13, 0))
+                .datum(LocalDate.of(2025, 6, 1))
+                .startuur(LocalTime.of(13, 0))
                 .beamerCode("2025")
-                .beamercheck("85") // 2025 % 97 = 85
+                .beamercheck("85")
                 .prijs(new BigDecimal("24.99"))
                 .lokaal(lokaal2)
                 .build();
@@ -91,9 +92,10 @@ public class InitDataConfig implements CommandLineRunner {
         var event3 = Event.builder()
                 .naam("Reactive Programming")
                 .beschrijving("Hands-on met WebFlux")
-                .datumTijd(LocalDateTime.of(2025, 6, 2, 10, 0))
+                .datum(LocalDate.of(2025, 6, 2))
+                .startuur(LocalTime.of(10, 0))
                 .beamerCode("0999")
-                .beamercheck("30") // 999 % 97 = 30
+                .beamercheck("29")
                 .prijs(new BigDecimal("29.99"))
                 .lokaal(lokaal3)
                 .build();
@@ -106,10 +108,9 @@ public class InitDataConfig implements CommandLineRunner {
         sprekerRepository.saveAll(List.of(spreker1a, spreker1b, spreker2a, spreker3a, spreker3b));
 
         // ---------- Favoriet ----------
-//        var favoriet = new Favoriet();
-//        favoriet.setGebruiker(user);
-//        favoriet.setEvent(event1);
-//
-//        favorietRepository.save(favoriet);
+        var favoriet = new Favoriet();
+        favoriet.setGebruiker(user);
+        favoriet.setEvent(event1);
+        favorietRepository.save(favoriet);
     }
 }

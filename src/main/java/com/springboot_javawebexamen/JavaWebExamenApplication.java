@@ -44,4 +44,8 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
     @Bean FavorietService favorietService(){
         return new FavorietServiceImpl();
     }
+
+    @Bean LokaalService lokaalService(){
+        return new LokaalServiceImpl();
+    }
 }

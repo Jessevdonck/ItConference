@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface FavorietRepository extends CrudRepository<Favoriet, Long> {
-    List<Favoriet> findByGebruikerOrderByEvent_DatumTijdAscEvent_NaamAsc(Gebruiker gebruiker);
+    List<Favoriet> findByGebruikerOrderByEvent_DatumAscEvent_StartuurAscEvent_NaamAsc(Gebruiker gebruiker);
 
     boolean existsByGebruikerIdAndEventId(Long gebruikerId, Long eventId);
 

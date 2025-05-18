@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import service.EventService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EventRestController {
     @GetMapping
     public List<Event> getEventsByDate(
             @RequestParam("datum")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime datum) {
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate datum) {
         return eventService.getEventsOpDatum(datum);
     }
 }

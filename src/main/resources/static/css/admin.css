@@ -1,0 +1,331 @@
+/* Admin en formulier styling */
+@import 'variables.css';
+
+/* Admin layout */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.admin-header h1 {
+    margin: 0;
+    color: var(--primary-color);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+}
+
+.admin-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+/* Tabs voor verschillende secties */
+.admin-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--primary-lighter);
+    margin-bottom: var(--spacing-lg);
+}
+
+.admin-tab {
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    font-weight: 500;
+    color: var(--text-medium);
+    transition: all 0.2s ease;
+}
+
+.admin-tab:hover {
+    color: var(--primary-color);
+}
+
+.admin-tab.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+/* Actie knoppen */
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.action-button svg {
+    width: 18px;
+    height: 18px;
+}
+
+.action-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.action-button.primary:hover {
+    background-color: var(--primary-dark);
+    text-decoration: none;
+    color: white;
+}
+
+/* Tabel styling */
+.admin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: var(--spacing-xl);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    table-layout: fixed;
+}
+
+.admin-table th {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: left;
+    padding: var(--spacing-md);
+    font-weight: 500;
+}
+
+/* Lokalen tabel */
+#content-lokalen .admin-table th:first-child {
+    border-top-left-radius: var(--radius-md);
+    width: 35%;
+}
+
+#content-lokalen .admin-table th:nth-child(2) {
+    width: 40%;
+}
+
+#content-lokalen .admin-table th:last-child {
+    border-top-right-radius: var(--radius-md);
+    width: 25%;
+    padding-left: var(--spacing-md);
+}
+
+/* Evenementen tabel */
+#content-events .admin-table th:first-child {
+    border-top-left-radius: var(--radius-md);
+    width: 30%;
+}
+
+#content-events .admin-table th:nth-child(2) {
+    width: 25%;
+}
+
+#content-events .admin-table th:nth-child(3) {
+    width: 20%;
+}
+
+#content-events .admin-table th:last-child {
+    border-top-right-radius: var(--radius-md);
+    width: 25%;
+    padding-left: var(--spacing-md);
+}
+
+.admin-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--primary-lighter);
+    background-color: white;
+}
+
+.admin-table td:last-child {
+    padding-left: var(--spacing-md);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background-color: var(--primary-lighter);
+}
+
+.admin-table .actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-xs);
+}
+
+/* Knoppen in tabel */
+.table-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    border: none;
+    height: 36px;
+    min-width: 90px;
+    box-sizing: border-box;
+}
+
+.table-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.table-btn.edit {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table-btn.edit:hover {
+    background-color: var(--primary-dark);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: white;
+}
+
+.table-btn.delete {
+    background-color: #f87171;
+    color: white;
+    cursor: pointer;
+}
+
+.table-btn.delete:hover {
+    background-color: #ef4444;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Alert berichten */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.alert.success {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #dcfce7;
+}
+
+.alert.error {
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.alert.info {
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #dbeafe;
+}
+
+/* Formulier styling */
+.form-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: var(--spacing-xl);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-lighter);
+    background-color: white;
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.error {
+    color: #b91c1c;
+    font-size: 0.85rem;
+    margin-top: var(--spacing-xs);
+}
+
+/* Responsive aanpassingen */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .admin-tab {
+        padding: var(--spacing-sm) var(--spacing-md);
+        white-space: nowrap;
+    }
+
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+        table-layout: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}

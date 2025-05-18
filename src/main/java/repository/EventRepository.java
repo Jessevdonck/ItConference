@@ -1,24 +1,23 @@
 package repository;
 
 import domain.Event;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
 public interface EventRepository extends CrudRepository<Event, Long> {
 
-    List<Event> findAllByOrderByDatumTijdAsc();
+    List<Event> findAllByOrderByDatumAscStartuurAsc();
 
-    @Query("SELECT e FROM Event e WHERE e.datumTijd >= :start AND e.datumTijd < :end")
-    List<Event> findByDatum(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+    List<Event> findByDatumOrderByStartuurAsc(LocalDate datum);
 
+    boolean existsByNaamAndDatumAndStartuur(String naam, LocalDate datum, LocalTime startuur);
 
-    boolean existsByNaamAndDatumTijd(String naam, LocalDateTime datumTijd);
+    boolean existsByLokaalIdAndDatumAndStartuur(Long lokaalId, LocalDate datum, LocalTime startuur);
 
-    boolean existsByLokaalIdAndDatumTijd(Long lokaalId, LocalDateTime datumTijd);
+    boolean existsByLokaal_Id(Long lokaalId);
 }

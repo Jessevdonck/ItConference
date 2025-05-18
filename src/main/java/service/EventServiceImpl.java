@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import repository.EventRepository;
 import repository.LokaalRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +23,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getAllEventsSorted() {
-        return eventRepository.findAllByOrderByDatumTijdAsc();
+        return eventRepository.findAllByOrderByDatumAscStartuurAsc();
     }
 
     @Override
@@ -31,12 +33,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public boolean bestaatEventMetZelfdeNaamEnTijd(Event event) {
-        return eventRepository.existsByNaamAndDatumTijd(event.getNaam(), event.getDatumTijd());
+        return eventRepository.existsByNaamAndDatumAndStartuur(event.getNaam(), event.getDatum(), event.getStartuur());
     }
 
     @Override
-    public boolean isLokaalBezet(Long lokaalId, LocalDateTime tijd) {
-        return eventRepository.existsByLokaalIdAndDatumTijd(lokaalId, tijd);
+    public boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd) {
+        return eventRepository.existsByLokaalIdAndDatumAndStartuur(lokaalId, datum, tijd);
     }
 
     @Override
@@ -45,10 +47,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getEventsOpDatum(LocalDateTime datum) {
-        LocalDateTime start = datum.toLocalDate().atStartOfDay();
-        LocalDateTime end = start.plusDays(1);
-        return eventRepository.findByDatum(start, end);
+    public List<Event> getEventsOpDatum(LocalDate datum) {
+        return eventRepository.findByDatumOrderByStartuurAsc(datum);
     }
 
     @Override

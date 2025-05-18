@@ -52,7 +52,7 @@ public class PerformRestClient {
 
     private void printEventList(List<Event> events) {
         for (Event e : events) {
-            System.out.println("Event: " + e.getNaam() + ", Datum: " + e.getDatumTijd());
+            System.out.println("Event: " + e.getNaam() + ", Datum: " + e.getDatum());
         }
     }
 }

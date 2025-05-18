@@ -23,7 +23,7 @@ public class Lokaal {
     @Pattern(regexp = "^[A-Za-z]{1}\\d{3}$", message = "{lokaal.naam.formaat}")
     private String naam;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Min(value = 1, message = "{lokaal.capaciteit.min}")
     @Max(value = 50, message = "{lokaal.capaciteit.max}")
     private int capaciteit;

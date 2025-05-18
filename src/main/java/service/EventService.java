@@ -2,9 +2,9 @@ package service;
 
 import domain.Event;
 import domain.Lokaal;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +16,11 @@ public interface EventService {
 
     boolean bestaatEventMetZelfdeNaamEnTijd(Event event);
 
-    boolean isLokaalBezet(Long lokaalId, LocalDateTime tijd);
+    boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd); // ⬅ aangepast
 
     Event bewaarEvent(Event event);
 
-    List<Event> getEventsOpDatum(LocalDateTime datum);
+    List<Event> getEventsOpDatum(LocalDate datum); // ⬅ aangepast
 
     Lokaal getLokaalById(Long lokaalId);
 

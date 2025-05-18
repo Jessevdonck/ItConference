@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${event.id} == null ? 'Evenement toevoegen' : 'Evenement bewerken'"></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/admin.css}" />
+</head>
+<body>
+<div th:replace="~{nav :: navbar}"></div>
+
+<div class="admin-container">
+  <div class="admin-header">
+    <h1 th:text="${event.id} == null ? 'Evenement toevoegen' : 'Evenement bewerken'"></h1>
+  </div>
+
+  <div class="form-card">
+    <form th:action="@{${event.id == null ? '/evenementen/toevoegen' : '/evenementen/bewerken/' + event.id}}" th:object="${event}" method="post">
+
+    <div class="form-group">
+        <label for="naam">Naam</label>
+        <input id="naam" type="text" th:field="*{naam}" class="form-control" placeholder="Naam van het event" />
+        <div class="error" th:if="${#fields.hasErrors('naam')}">
+          <span th:each="err : ${#fields.errors('naam')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="beschrijving">Beschrijving</label>
+        <textarea id="beschrijving" th:field="*{beschrijving}" class="form-control" placeholder="Optioneel"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="sprekers">Sprekers (gescheiden door komma's)</label>
+        <input id="sprekers" name="sprekersInput" type="text"
+               th:value="${sprekersString != null} ? ${sprekersString} : ''"
+               class="form-control" placeholder="Max. 3 unieke sprekers" />
+        <div class="error" th:if="${#fields.hasErrors('sprekers')}">
+          <span th:each="err : ${#fields.errors('sprekers')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lokaal">Lokaal</label>
+        <select id="lokaal" th:field="*{lokaal.id}" class="form-control">
+          <option value="" disabled selected>Kies een lokaal</option>
+          <option th:each="lokaal : ${lokalen}" th:value="${lokaal.id}" th:text="${lokaal.naam}"></option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('lokaal')}">
+          <span th:each="err : ${#fields.errors('lokaal')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="datum">Datum</label>
+        <input id="datum" type="date" th:field="*{datum}" class="form-control" />
+        <div class="error" th:if="${#fields.hasErrors('datum')}">
+          <span th:each="err : ${#fields.errors('datum')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tijd">Startuur</label>
+        <input id="tijd" type="time" th:field="*{startuur}" class="form-control" />
+        <div class="error" th:if="${#fields.hasErrors('startuur')}">
+          <span th:each="err : ${#fields.errors('startuur')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="beamerCode">Beamercode</label>
+        <input id="beamerCode" type="text" th:field="*{beamerCode}" class="form-control" placeholder="4-cijferige code" />
+        <div class="error" th:if="${#fields.hasErrors('beamerCode')}">
+          <span th:each="err : ${#fields.errors('beamerCode')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="beamercheck">Beamercheck</label>
+        <input id="beamercheck" type="text" th:field="*{beamercheck}" class="form-control" placeholder="2-cijferige checksum" />
+        <div class="error" th:if="${#fields.hasErrors('beamercheck')}">
+          <span th:each="err : ${#fields.errors('beamercheck')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="prijs">Prijs (€)</label>
+        <input id="prijs" type="number" step="0.01" th:field="*{prijs}" class="form-control" placeholder="bv. 19.99" />
+        <div class="error" th:if="${#fields.hasErrors('prijs')}">
+          <span th:each="err : ${#fields.errors('prijs')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn action-button primary">Opslaan</button>
+        <a th:href="@{/admin}" class="btn action-button">Annuleren</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const beamercodeInput = document.getElementById('beamerCode');
+    const beamercheckInput = document.getElementById('beamercheck');
+
+    if (beamercodeInput && beamercheckInput) {
+      beamercodeInput.addEventListener('input', function () {
+        const code = beamercodeInput.value;
+
+        if (/^\d{4}$/.test(code)) {
+          const checksum = (parseInt(code, 10) % 97).toString().padStart(2, '0');
+          beamercheckInput.value = checksum;
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

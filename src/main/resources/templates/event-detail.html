@@ -33,12 +33,12 @@
     <div class="event-meta">
         <div class="meta-item">
             <span class="meta-label">Datum</span>
-            <div class="meta-value" th:text="${#temporals.format(event.datumTijd, 'dd-MM-yyyy')}">01-01-2023</div>
+            <div class="meta-value" th:text="${#temporals.format(event.datum, 'dd-MM-yyyy')}"></div>
         </div>
 
         <div class="meta-item">
             <span class="meta-label">Tijd</span>
-            <div class="meta-value" th:text="${#temporals.format(event.datumTijd, 'HH:mm')}">14:00</div>
+            <div class="meta-value" th:text="${#temporals.format(event.startuur, 'HH:mm')}"></div>
         </div>
 
         <div class="meta-item">

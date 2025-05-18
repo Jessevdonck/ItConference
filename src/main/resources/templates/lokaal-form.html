@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${lokaal.id} == null ? 'Lokaal toevoegen' : 'Lokaal bewerken'"></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/admin.css}" />
+</head>
+<body>
+<div th:replace="~{nav :: navbar}"></div>
+
+<div class="admin-container">
+  <div class="admin-header">
+    <h1 th:text="${lokaal.id} == null ? 'Lokaal toevoegen' : 'Lokaal bewerken'"></h1>
+  </div>
+
+  <div class="form-card">
+    <!-- Formulier met lokaal object -->
+    <form th:action="@{${lokaal.id == null ? '/lokaal/toevoegen' : '/lokaal/bewerken/' + lokaal.id}}" method="post" th:object="${lokaal}">
+      <div class="form-group">
+        <label for="naam">Naam lokaal</label>
+        <input id="naam" type="text" th:field="*{naam}" class="form-control" placeholder="Bijv. A101, B203, etc."/>
+        <div th:if="${#fields.hasErrors('naam')}" class="error">
+          <span th:each="err : ${#fields.errors('naam')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="capaciteit">Capaciteit</label>
+        <input id="capaciteit" type="number" th:field="*{capaciteit}" class="form-control" placeholder="Aantal personen"/>
+        <div th:if="${#fields.hasErrors('capaciteit')}" class="error">
+          <span th:each="err : ${#fields.errors('capaciteit')}" th:text="${err}"></span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn action-button primary">Opslaan</button>
+        <a th:href="@{/admin}" class="btn action-button">Annuleren</a>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>

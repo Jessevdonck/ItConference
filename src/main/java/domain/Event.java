@@ -4,20 +4,24 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import validation.ValidBeamerCheck;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "event", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"naam", "datumTijd"})
+        @UniqueConstraint(columnNames = {"naam", "datum", "startuur"})
 })
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ValidBeamerCheck
 public class Event {
 
     @Id
@@ -26,6 +30,7 @@ public class Event {
 
     @Column(nullable = false)
     @Pattern(regexp = "^[A-Za-z].*", message = "{event.naam.startletter}")
+    @NotNull(message = "{event.naam.startletter}")
     private String naam;
 
     private String beschrijving;
@@ -46,8 +51,12 @@ public class Event {
     private Lokaal lokaal;
 
     @Column(nullable = false)
-    @NotNull(message = "{event.datumTijd.verplicht}")
-    private LocalDateTime datumTijd;
+    @NotNull(message = "{event.datum.verplicht}")
+    private LocalDate datum;
+
+    @Column(nullable = false)
+    @NotNull(message = "{event.lokaal.verplicht}")
+    private LocalTime startuur;
 
     @Column(nullable = false, length = 4)
     @Pattern(regexp = "\\d{4}", message = "{event.beamerCode.format}")
