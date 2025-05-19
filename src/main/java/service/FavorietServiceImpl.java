@@ -31,11 +31,17 @@ public class FavorietServiceImpl implements FavorietService {
     }
 
     @Override
-    public void voegFavorietToe(Gebruiker gebruiker, Event event){
-        Favoriet favoriet = new Favoriet();
-        favoriet.setGebruiker(gebruiker);
-        favoriet.setEvent(event);
-        favorietRepository.save(favoriet);
+    public void voegFavorietToe(Gebruiker gebruiker, Event event) {
+        if (favorietRepository.countByGebruikerId(gebruiker.getId()) >= 3) {
+            throw new IllegalStateException("${favoriet.gebruiker.maximum}");
+        }
+
+        if (!favorietRepository.findByGebruikerAndEvent(gebruiker, event).isPresent()) {
+            Favoriet favoriet = new Favoriet();
+            favoriet.setGebruiker(gebruiker);
+            favoriet.setEvent(event);
+            favorietRepository.save(favoriet);
+        }
     }
 
     @Override

@@ -44,7 +44,6 @@
       <div class="form-group">
         <label for="lokaal">Lokaal</label>
         <select id="lokaal" th:field="*{lokaal.id}" class="form-control">
-          <option value="" disabled selected>Kies een lokaal</option>
           <option th:each="lokaal : ${lokalen}" th:value="${lokaal.id}" th:text="${lokaal.naam}"></option>
         </select>
         <div class="error" th:if="${#fields.hasErrors('lokaal')}">

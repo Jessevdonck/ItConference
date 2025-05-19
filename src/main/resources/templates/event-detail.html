@@ -106,6 +106,10 @@
             <div class="meta-value" th:text="${event.lokaal.capaciteit}">50 personen</div>
         </div>
     </div>
+
+    <div th:if="${foutmelding}" class="error-message" style="margin-bottom: 1rem; color: #b91c1c;">
+        <p th:text="${foutmelding}">Er is een fout opgetreden.</p>
+    </div>
 </div>
 </body>
 </html>

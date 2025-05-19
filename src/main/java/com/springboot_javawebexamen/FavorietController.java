@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.FavorietService;
 import service.EventService;
 import service.GebruikerService;
@@ -35,12 +36,21 @@ public class FavorietController {
 
     @PostMapping("/toevoegen/{eventId}")
     public String voegToe(@PathVariable Long eventId,
-                          @AuthenticationPrincipal UserDetails userDetails) {
+                          @AuthenticationPrincipal UserDetails userDetails,
+                          RedirectAttributes redirectAttributes) {
+
         Gebruiker gebruiker = gebruikerService.getUserByUsername(userDetails.getUsername());
         Event event = eventService.getEventById(eventId).orElseThrow();
+
+        if (favorietService.aantalFavorieten(gebruiker) >= 3) {
+            redirectAttributes.addFlashAttribute("foutmelding", "Je kunt maximaal 3 favorieten toevoegen.");
+            return "redirect:/event/" + eventId;
+        }
+
         favorietService.voegFavorietToe(gebruiker, event);
         return "redirect:/event/" + eventId;
     }
+
 
     @PostMapping("/verwijderen/{eventId}")
     public String verwijder(@PathVariable Long eventId,

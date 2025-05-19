@@ -42,10 +42,28 @@ public class EventBeheerController {
     @PostMapping("/toevoegen")
     public String verwerkToevoegen(@Valid @ModelAttribute Event event,
                                    BindingResult result,
+                                   @RequestParam(required = false) String sprekersInput,
                                    RedirectAttributes redirectAttributes,
                                    Model model) {
 
-        var namen = event.getSprekers().stream()
+        Set<Spreker> sprekers = Arrays.stream((sprekersInput != null ? sprekersInput : "")
+                        .split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(naam -> Spreker.builder().naam(naam).event(event).build())
+                .collect(Collectors.toSet());
+
+        event.setSprekers(sprekers);
+
+        if (sprekers.isEmpty()) {
+            result.rejectValue("sprekers", "event.spreker.verplicht", "Je moet minstens 1 spreker opgeven.");
+        }
+
+        if (sprekers.size() > 3) {
+            result.rejectValue("sprekers", "event.sprekers.teveel", "Je mag maximaal 3 sprekers opgeven.");
+        }
+
+        var namen = sprekers.stream()
                 .map(Spreker::getNaam)
                 .map(String::trim)
                 .map(String::toLowerCase)
@@ -53,7 +71,7 @@ public class EventBeheerController {
 
         var uniekeNamen = new java.util.HashSet<>(namen);
         if (uniekeNamen.size() < namen.size()) {
-            result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten unieke zijn");
+            result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten uniek zijn");
         }
 
         if(eventService.bestaatEventMetZelfdeNaamEnDatum(event)){
@@ -64,9 +82,9 @@ public class EventBeheerController {
             result.rejectValue("startuur", "event.bestaat", "Er bestaat al een evenement op dit tijdstip");
         }
 
-
         if (result.hasErrors()) {
             model.addAttribute("lokalen", lokaalService.getAlleLokalen());
+            model.addAttribute("sprekersString", sprekersInput);
             return "event-form";
         }
 
@@ -74,6 +92,7 @@ public class EventBeheerController {
         redirectAttributes.addFlashAttribute("message", "Evenement werd toegevoegd.");
         return "redirect:/admin";
     }
+
 
 
     @GetMapping("/bewerken/{id}")
@@ -108,6 +127,14 @@ public class EventBeheerController {
                 .collect(Collectors.toSet());
 
         event.setSprekers(sprekers);
+
+        if (sprekers.isEmpty()) {
+            result.rejectValue("sprekers", "event.spreker.verplicht", "Je moet minstens 1 spreker opgeven.");
+        }
+
+        if (sprekers.size() > 3) {
+            result.rejectValue("sprekers", "event.sprekers.teveel", "Je mag maximaal 3 sprekers opgeven.");
+        }
 
         // check op dubbele namen
         Set<String> uniekeNamen = new HashSet<>();
