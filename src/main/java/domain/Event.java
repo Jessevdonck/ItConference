@@ -38,6 +38,7 @@ public class Event {
     @Column(nullable = false)
     @DecimalMin(value = "9.99", message = "{event.prijs.min}")
     @DecimalMax(value = "100.00", message = "{event.prijs.max}")
+    @NotNull(message="{event.prijs.verplicht}")
     private BigDecimal prijs;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)

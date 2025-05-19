@@ -2,6 +2,7 @@ package com.springboot_javawebexamen;
 
 import domain.Event;
 import domain.Lokaal;
+import domain.Spreker;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/evenementen")
@@ -40,6 +45,26 @@ public class EventBeheerController {
                                    RedirectAttributes redirectAttributes,
                                    Model model) {
 
+        var namen = event.getSprekers().stream()
+                .map(Spreker::getNaam)
+                .map(String::trim)
+                .map(String::toLowerCase)
+                .toList();
+
+        var uniekeNamen = new java.util.HashSet<>(namen);
+        if (uniekeNamen.size() < namen.size()) {
+            result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten unieke zijn");
+        }
+
+        if(eventService.bestaatEventMetZelfdeNaamEnDatum(event)){
+            result.rejectValue("naam", "event.naam.datum.bestaat", "Dit evenement gaat al door vandaag");
+        }
+
+        if(eventService.isLokaalBezet(event.getLokaal().getId(), event.getDatum(), event.getStartuur())){
+            result.rejectValue("startuur", "event.bestaat", "Er bestaat al een evenement op dit tijdstip");
+        }
+
+
         if (result.hasErrors()) {
             model.addAttribute("lokalen", lokaalService.getAlleLokalen());
             return "event-form";
@@ -56,8 +81,14 @@ public class EventBeheerController {
         Event event = eventService.getEventById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Event niet gevonden met id " + id));
 
+        String sprekersString = event.getSprekers().stream()
+                .map(Spreker::getNaam)
+                .map(String::trim)
+                .collect(Collectors.joining(", "));
+
         model.addAttribute("event", event);
         model.addAttribute("lokalen", lokaalService.getAlleLokalen());
+        model.addAttribute("sprekersString", sprekersString);
         return "event-form";
     }
 
@@ -65,19 +96,31 @@ public class EventBeheerController {
     public String verwerkBewerking(@PathVariable Long id,
                                    @Valid @ModelAttribute Event event,
                                    BindingResult result,
-                                   @RequestParam String datum,
-                                   @RequestParam String tijd,
+                                   @RequestParam(required = false) String sprekersInput,
                                    RedirectAttributes redirectAttributes,
                                    Model model) {
-        try {
-            event.setDatum(LocalDate.parse(datum));
-            event.setStartuur(LocalTime.parse(tijd));
-        } catch (DateTimeParseException e) {
-            result.rejectValue("datum", "invalid", "Ongeldige datum of tijd.");
+
+        Set<Spreker> sprekers = Arrays.stream((sprekersInput != null ? sprekersInput : "")
+                        .split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(naam -> Spreker.builder().naam(naam).event(event).build())
+                .collect(Collectors.toSet());
+
+        event.setSprekers(sprekers);
+
+        // check op dubbele namen
+        Set<String> uniekeNamen = new HashSet<>();
+        for (Spreker spreker : sprekers) {
+            if (!uniekeNamen.add(spreker.getNaam().toLowerCase())) {
+                result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten unieke namen hebben.");
+                break;
+            }
         }
 
         if (result.hasErrors()) {
             model.addAttribute("lokalen", lokaalService.getAlleLokalen());
+            model.addAttribute("sprekersString", sprekersInput);
             return "event-form";
         }
 
@@ -86,6 +129,8 @@ public class EventBeheerController {
         redirectAttributes.addFlashAttribute("message", "Evenement werd bijgewerkt.");
         return "redirect:/admin";
     }
+
+
 
     @PostMapping("/verwijderen/{id}")
     public String verwijderEvent(@PathVariable Long id,

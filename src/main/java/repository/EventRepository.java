@@ -15,7 +15,7 @@ public interface EventRepository extends CrudRepository<Event, Long> {
 
     List<Event> findByDatumOrderByStartuurAsc(LocalDate datum);
 
-    boolean existsByNaamAndDatumAndStartuur(String naam, LocalDate datum, LocalTime startuur);
+    boolean existsByNaamAndDatum(String naam, LocalDate datum);
 
     boolean existsByLokaalIdAndDatumAndStartuur(Long lokaalId, LocalDate datum, LocalTime startuur);
 

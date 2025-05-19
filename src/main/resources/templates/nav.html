@@ -32,7 +32,7 @@
             </svg>
           </div>
           <div class="dropdown-menu">
-            <div class="dropdown-header" th:text="${username}">Ingelogd als Gebruiker</div>
+            <div class="dropdown-header" th:text="${username} + ' (' + ${userRole} + ')'">Ingelogd als Gebruiker</div>
             <div class="dropdown-divider"></div>
             <a th:href="@{/profiel}" class="dropdown-item">Mijn profiel</a>
             <a th:href="@{/favorieten}" class="dropdown-item">Mijn favorieten</a>

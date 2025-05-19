@@ -14,13 +14,13 @@ public interface EventService {
 
     Optional<Event> getEventById(Long id);
 
-    boolean bestaatEventMetZelfdeNaamEnTijd(Event event);
+    boolean bestaatEventMetZelfdeNaamEnDatum(Event event);
 
-    boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd); // ⬅ aangepast
+    boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd);
 
     Event bewaarEvent(Event event);
 
-    List<Event> getEventsOpDatum(LocalDate datum); // ⬅ aangepast
+    List<Event> getEventsOpDatum(LocalDate datum);
 
     Lokaal getLokaalById(Long lokaalId);
 

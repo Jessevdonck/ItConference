@@ -54,7 +54,9 @@
 
       <div class="form-group">
         <label for="datum">Datum</label>
-        <input id="datum" type="date" th:field="*{datum}" class="form-control" />
+        <input id="datum" type="date" name="datum"
+               th:value="${event.datum != null ? #temporals.format(event.datum, 'yyyy-MM-dd') : ''}"
+               class="form-control" />
         <div class="error" th:if="${#fields.hasErrors('datum')}">
           <span th:each="err : ${#fields.errors('datum')}" th:text="${err}"></span>
         </div>

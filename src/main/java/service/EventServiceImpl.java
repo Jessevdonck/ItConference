@@ -32,8 +32,8 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public boolean bestaatEventMetZelfdeNaamEnTijd(Event event) {
-        return eventRepository.existsByNaamAndDatumAndStartuur(event.getNaam(), event.getDatum(), event.getStartuur());
+    public boolean bestaatEventMetZelfdeNaamEnDatum(Event event) {
+        return eventRepository.existsByNaamAndDatum(event.getNaam(), event.getDatum());
     }
 
     @Override
