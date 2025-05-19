@@ -14,7 +14,6 @@
         </a>
         <div class="navbar-links">
           <a th:href="@{/}" class="nav-link">Home</a>
-          <a th:href="@{/events}" class="nav-link">Evenementen</a>
           <a th:if="${userRole}" th:href="@{/favorieten}" class="nav-link">Favorieten</a>
           <a th:if="${userRole == 'admin'}" th:href="@{/admin}" class="nav-link admin-link">Beheer</a>
         </div>

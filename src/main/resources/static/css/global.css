@@ -71,16 +71,23 @@ button.btn {
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-sm);
     font-weight: 500;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button.btn:hover {
     background-color: var(--primary-dark);
     text-decoration: none;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
+button.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .btn-secondary {
     background-color: var(--primary-lighter);

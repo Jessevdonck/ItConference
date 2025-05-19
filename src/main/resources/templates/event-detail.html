@@ -12,10 +12,65 @@
 <div th:replace="~{nav :: navbar}"></div>
 
 <div class="event-header">
-    <div class="event-header-content">
+    <div class="event-header-content" style="display: flex; align-items: center; justify-content: space-between;">
         <h1 th:text="${event.naam}">Event naam</h1>
+        <div style="display: flex; gap: 0.5rem;">
+            <form th:if="${userRole == 'user' || userRole == 'admin'} and !${isFavoriet}"
+                  th:action="@{'/favorieten/toevoegen/' + ${event.id}}"
+                  method="post">
+                <button type="submit" class="icon-button favorite-button" title="Voeg toe aan favorieten">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         width="24" height="24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="star-icon">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </button>
+            </form>
+
+            <form th:if="${userRole == 'user' || userRole == 'admin'} and ${isFavoriet}"
+                  th:action="@{'/favorieten/verwijderen/' + ${event.id}}"
+                  method="post">
+                <button type="submit" class="icon-button favorite-button" title="Verwijder uit favorieten">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         width="24" height="24"
+                         fill="#FFD700"
+                         stroke="#E6B800"
+                         stroke-width="1"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="star-icon">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                </button>
+            </form>
+
+            <form th:if="${userRole == 'admin'}" th:action="@{'/evenementen/bewerken/' + ${event.id}}" method="get">
+                <button type="submit" class="icon-button edit-button" title="Bewerk event">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 24 24"
+                         width="24" height="24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="pencil-icon">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <div class="event-detail-container">
     <div class="event-description">
@@ -50,16 +105,6 @@
             <span class="meta-label">Capaciteit</span>
             <div class="meta-value" th:text="${event.lokaal.capaciteit}">50 personen</div>
         </div>
-    </div>
-
-    <div class="event-actions">
-        <form th:if="${magToevoegenAanFavorieten}" th:action="@{'/favorieten/toevoegen/' + ${event.id}}" method="post">
-            <button type="submit" class="btn">Toevoegen aan favorieten</button>
-        </form>
-
-        <form th:if="${isAdmin}" th:action="@{'/event/bewerken/' + ${event.id}}" method="get">
-            <button type="submit" class="btn btn-secondary">Bewerk event</button>
-        </form>
     </div>
 </div>
 </body>
