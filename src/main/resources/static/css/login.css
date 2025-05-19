@@ -151,24 +151,6 @@
     text-decoration: underline;
 }
 
-/* Login button */
-.login-btn {
-    width: 100%;
-    padding: var(--spacing-md);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: var(--spacing-md);
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.login-btn:hover {
-    background-color: var(--primary-dark);
-}
 
 /* Login footer */
 .login-footer {
