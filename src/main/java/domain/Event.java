@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import validation.ConferentiePeriodeCheck;
 import validation.ValidBeamerCheck;
 
 import java.math.BigDecimal;
@@ -52,6 +53,7 @@ public class Event {
     private Lokaal lokaal;
 
     @Column(nullable = false)
+    @ConferentiePeriodeCheck
     @NotNull(message = "{event.datum.verplicht}")
     private LocalDate datum;
 
