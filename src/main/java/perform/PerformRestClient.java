@@ -17,7 +17,7 @@ public class PerformRestClient {
 
     public void run() {
         System.out.println("---- GET EVENTS OP DATUM ----");
-        getEventsByDate(LocalDateTime.of(2025, 5, 17, 0, 0));
+        getEventsByDate(LocalDateTime.of(2025, 6, 1, 10, 0));
         System.out.println("------------------------------");
 
         System.out.println("---- GET CAPACITEIT LOKAAL ID 1 ----");
@@ -32,7 +32,7 @@ public class PerformRestClient {
                         .host("localhost")
                         .port(8080)
                         .path("/api/events")
-                        .queryParam("datum", datum)
+                        .queryParam("datum", datum.toLocalDate())
                         .build())
                 .retrieve()
                 .bodyToFlux(Event.class)
@@ -43,7 +43,7 @@ public class PerformRestClient {
 
     private void getCapaciteitVoorLokaal(Long lokaalId) {
         webClient.get()
-                .uri(SERVER_URI + "/lokalen/" + lokaalId + "/capaciteit")
+                .uri(SERVER_URI + "/lokaal/" + lokaalId + "/capaciteit")
                 .retrieve()
                 .bodyToMono(Integer.class)
                 .doOnNext(cap -> System.out.println("Capaciteit lokaal " + lokaalId + ": " + cap))
