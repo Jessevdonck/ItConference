@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import validation.ConferentiePeriodeCheck;
 import validation.ValidBeamerCheck;
 
@@ -54,6 +55,7 @@ public class Event {
 
     @Column(nullable = false)
     @ConferentiePeriodeCheck
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull(message = "{event.datum.verplicht}")
     private LocalDate datum;
 
