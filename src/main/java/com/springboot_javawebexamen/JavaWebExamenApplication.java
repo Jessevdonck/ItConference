@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import perform.PerformRestClient;
 import service.*;
 import validation.EventValidator;
-import validation.FavorietValidator;
 import validation.SprekersValidator;
 
 @SpringBootApplication
@@ -61,5 +60,4 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
     EventValidator eventValidator(){
         return new EventValidator();
     }
-    
 }

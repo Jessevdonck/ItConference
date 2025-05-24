@@ -18,7 +18,6 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    // Configure authentication manager globally
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
