@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import perform.PerformRestClient;
 import service.*;
+import validation.EventValidator;
+import validation.FavorietValidator;
+import validation.SprekersValidator;
 
 @SpringBootApplication
 @EnableJpaRepositories("repository")
@@ -48,4 +51,15 @@ public class JavaWebExamenApplication implements WebMvcConfigurer {
     @Bean LokaalService lokaalService(){
         return new LokaalServiceImpl();
     }
+
+    @Bean
+    SprekersValidator sprekersValidator(){
+        return new SprekersValidator();
+    }
+
+    @Bean
+    EventValidator eventValidator(){
+        return new EventValidator();
+    }
+    
 }

@@ -25,4 +25,8 @@ public interface EventService {
     Lokaal getLokaalById(Long lokaalId);
 
     void deleteEvent(Long eventId);
+
+    boolean bestaatEventMetZelfdeNaamEnDatumVoorAndereEvent(Event event);
+
+    public boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd, Long huidigEventId);
 }

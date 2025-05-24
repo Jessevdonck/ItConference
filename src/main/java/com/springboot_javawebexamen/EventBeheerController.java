@@ -1,24 +1,21 @@
 package com.springboot_javawebexamen;
 
 import domain.Event;
-import domain.Lokaal;
 import domain.Spreker;
-import jakarta.validation.Valid;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.EventService;
 import service.LokaalService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeParseException;
+import validation.EventValidator;
+import validation.SprekersValidator;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +29,20 @@ public class EventBeheerController {
     @Autowired
     private LokaalService lokaalService;
 
+    @Autowired
+    private EventValidator eventValidator;
+
+    @Autowired
+    private SprekersValidator sprekersValidator;
+
+    @Autowired
+    private Validator validator;
+
+    @InitBinder("event")
+    protected void initBinder(WebDataBinder binder){
+        binder.addValidators(sprekersValidator, eventValidator);
+    }
+
     @GetMapping("/toevoegen")
     public String toonToevoegenForm(Model model) {
         model.addAttribute("event", new Event());
@@ -40,7 +51,7 @@ public class EventBeheerController {
     }
 
     @PostMapping("/toevoegen")
-    public String verwerkToevoegen(@Valid @ModelAttribute Event event,
+    public String verwerkToevoegen(@ModelAttribute Event event,
                                    BindingResult result,
                                    @RequestParam(required = false) String sprekersInput,
                                    RedirectAttributes redirectAttributes,
@@ -55,32 +66,8 @@ public class EventBeheerController {
 
         event.setSprekers(sprekers);
 
-        if (sprekers.isEmpty()) {
-            result.rejectValue("sprekers", "event.spreker.verplicht", "Je moet minstens 1 spreker opgeven.");
-        }
-
-        if (sprekers.size() > 3) {
-            result.rejectValue("sprekers", "event.sprekers.teveel", "Je mag maximaal 3 sprekers opgeven.");
-        }
-
-        var namen = sprekers.stream()
-                .map(Spreker::getNaam)
-                .map(String::trim)
-                .map(String::toLowerCase)
-                .toList();
-
-        var uniekeNamen = new java.util.HashSet<>(namen);
-        if (uniekeNamen.size() < namen.size()) {
-            result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten uniek zijn");
-        }
-
-        if(eventService.bestaatEventMetZelfdeNaamEnDatum(event)){
-            result.rejectValue("naam", "event.naam.datum.bestaat", "Dit evenement gaat al door vandaag");
-        }
-
-        if(eventService.isLokaalBezet(event.getLokaal().getId(), event.getDatum(), event.getStartuur())){
-            result.rejectValue("startuur", "event.bestaat", "Er bestaat al een evenement op dit tijdstip");
-        }
+        sprekersValidator.validate(event, result);
+        eventValidator.validate(event, result);
 
         if (result.hasErrors()) {
             model.addAttribute("lokalen", lokaalService.getAlleLokalen());
@@ -92,6 +79,8 @@ public class EventBeheerController {
         redirectAttributes.addFlashAttribute("message", "Evenement werd toegevoegd.");
         return "redirect:/admin";
     }
+
+
 
 
 
@@ -113,7 +102,7 @@ public class EventBeheerController {
 
     @PostMapping("/bewerken/{id}")
     public String verwerkBewerking(@PathVariable Long id,
-                                   @Valid @ModelAttribute Event event,
+                                   @ModelAttribute Event event,
                                    BindingResult result,
                                    @RequestParam(required = false) String sprekersInput,
                                    RedirectAttributes redirectAttributes,
@@ -128,22 +117,15 @@ public class EventBeheerController {
 
         event.setSprekers(sprekers);
 
-        if (sprekers.isEmpty()) {
-            result.rejectValue("sprekers", "event.spreker.verplicht", "Je moet minstens 1 spreker opgeven.");
+        Set<ConstraintViolation<Event>> violations = validator.validate(event);
+        for (ConstraintViolation<Event> violation : violations) {
+            String propertyPath = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+            result.rejectValue(propertyPath, null, message);
         }
 
-        if (sprekers.size() > 3) {
-            result.rejectValue("sprekers", "event.sprekers.teveel", "Je mag maximaal 3 sprekers opgeven.");
-        }
-
-        // check op dubbele namen
-        Set<String> uniekeNamen = new HashSet<>();
-        for (Spreker spreker : sprekers) {
-            if (!uniekeNamen.add(spreker.getNaam().toLowerCase())) {
-                result.rejectValue("sprekers", "event.sprekers.dubbel", "Sprekers moeten unieke namen hebben.");
-                break;
-            }
-        }
+        sprekersValidator.validate(event, result);
+        eventValidator.validate(event, result);
 
         if (result.hasErrors()) {
             model.addAttribute("lokalen", lokaalService.getAlleLokalen());
@@ -156,6 +138,7 @@ public class EventBeheerController {
         redirectAttributes.addFlashAttribute("message", "Evenement werd bijgewerkt.");
         return "redirect:/admin";
     }
+
 
 
 

@@ -61,4 +61,17 @@ public class EventServiceImpl implements EventService {
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
     }
+
+    @Override
+    public boolean bestaatEventMetZelfdeNaamEnDatumVoorAndereEvent(Event event) {
+        Optional<Event> bestaandEvent = eventRepository.findByNaamAndDatum(event.getNaam(), event.getDatum());
+        return bestaandEvent.isPresent() && !bestaandEvent.get().getId().equals(event.getId());
+    }
+
+    @Override
+    public boolean isLokaalBezet(Long lokaalId, LocalDate datum, LocalTime tijd, Long huidigEventId) {
+        Optional<Event> bestaandEvent = eventRepository.findByLokaalIdAndDatumAndStartuur(lokaalId, datum, tijd);
+        return bestaandEvent.isPresent() && !bestaandEvent.get().getId().equals(huidigEventId);
+    }
+
 }
