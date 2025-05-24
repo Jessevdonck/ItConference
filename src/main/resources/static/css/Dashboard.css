@@ -83,6 +83,7 @@ h1::after {
 
 .event-detail {
     display: flex;
+    flex-direction: column;
     margin-bottom: var(--spacing-md);
     align-items: flex-start;
 }
@@ -112,6 +113,8 @@ h1::after {
 .event-datetime-container {
     margin-top: var(--spacing-sm);
 }
+
+
 
 .event-date,
 .event-time {
