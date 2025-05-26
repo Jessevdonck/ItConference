@@ -44,7 +44,7 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @Size(max = 3, message = "{event.sprekers.max3}")
+    @Size(max = 3, message = "{event.sprekers.max}")
     private Set<Spreker> sprekers;
 
     @ManyToOne(optional = false)

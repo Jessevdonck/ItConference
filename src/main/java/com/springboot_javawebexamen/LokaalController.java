@@ -69,12 +69,9 @@ public class LokaalController {
 
     @PostMapping("/verwijderen/{id}")
     public String verwijderLokaal(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            lokaalService.verwijderLokaal(id);
-            redirectAttributes.addFlashAttribute("message", "Lokaal werd verwijderd.");
-        } catch (IllegalStateException e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-        }
+        lokaalService.verwijderLokaal(id);
+        redirectAttributes.addFlashAttribute("message", "Lokaal werd verwijderd.");
+
         return "redirect:/admin";
     }
 }
