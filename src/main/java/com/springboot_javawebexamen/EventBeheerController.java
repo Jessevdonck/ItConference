@@ -66,6 +66,13 @@ public class EventBeheerController {
 
         event.setSprekers(sprekers);
 
+        Set<ConstraintViolation<Event>> violations = validator.validate(event);
+        for (ConstraintViolation<Event> violation : violations) {
+            String propertyPath = violation.getPropertyPath().toString();
+            String message = violation.getMessage();
+            result.rejectValue(propertyPath, null, message);
+        }
+
         sprekersValidator.validate(event, result);
         eventValidator.validate(event, result);
 
@@ -79,6 +86,7 @@ public class EventBeheerController {
         redirectAttributes.addFlashAttribute("message", "Evenement werd toegevoegd.");
         return "redirect:/admin";
     }
+
 
 
 
